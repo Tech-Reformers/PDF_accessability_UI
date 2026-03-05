@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import { HEADER_BACKGROUND } from '../utilities/constants';
-import logo from '../assets/pdf-accessability-logo.svg';
+import logo from '../assets/TechReformers100.png';
 import MenuIcon from '@mui/icons-material/Menu';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
@@ -76,7 +76,7 @@ function Header({ handleSignOut, usageCount, maxFilesAllowed, refreshUsage, usag
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             <img
               src={logo}
-              alt="PDF Accessibility Logo"
+              alt="PDF Accessibility Tool — Tech Reformers"
               style={{ 
                 height: isMobile ? '32px' : '40px', 
                 width: 'auto' 

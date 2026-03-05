@@ -25,7 +25,7 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import CloseIcon from '@mui/icons-material/Close';
 
 // Images
-import asuLogo from '../assets/ASU_CIC_LOGO_WHITE.png';
+import trLogo from '../assets/TechReformers100.png';
 import gradientImg from '../assets/Gradient.svg';
 import awsLogo from '../assets/POWERED_BY_AWS.png';
 import bottomGradient from '../assets/bottom_gradient.svg';
@@ -34,20 +34,20 @@ import bottomGradient from '../assets/bottom_gradient.svg';
 import { styled } from '@mui/system';
 
 const StyledLink = styled(Link)(({ theme }) => ({
-  color: '#8C1D40',
+  color: '#2c550b',
   textDecoration: 'underline',
   component: 'a',
   '&:hover': {
-    color: '#70122F',
+    color: '#1a3a07',
   },
 }));
 
 const StyledEmailLink = styled(Link)(({ theme }) => ({
-  color: '#8C1D40',
+  color: '#2c550b',
   textDecoration: 'none',
   component: 'a',
   '&:hover': {
-    color: '#70122F',
+    color: '#1a3a07',
     textDecoration: 'underline',
   },
 }));
@@ -186,8 +186,7 @@ const LandingPage = () => {
             About this solution:
           </Typography>
           <Typography variant="body1" component="h3" paragraph>
-            This solution was created by the Arizona State University Artificial
-            Intelligence Cloud Innovation Center (AI CIC), powered by Amazon Web
+            This solution was developed by Tech Reformers, powered by Amazon Web
             Services (AWS), to tackle a significant challenge in the digital era:
             improving the accessibility of digital document collections.
           </Typography>
@@ -201,7 +200,7 @@ const LandingPage = () => {
           </Typography>
           <Typography variant="body1" component="h3" paragraph>
             To test out this open‐source solution,{' '}
-            <Box component="span" sx={{ color: '#FFC627', fontWeight: 'bold' }}>
+            <Box component="span" sx={{ color: '#6bad24', fontWeight: 'bold' }}>
               click the button to the right
             </Box>{' '}
             to briefly create an account, upload your document, and receive your
@@ -221,9 +220,9 @@ const LandingPage = () => {
             </Typography>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <img
-                src={asuLogo}
-                alt="ASU AI CIC Logo (white)"
-                style={{ height: 70, width: 'auto', marginRight: '16px' }}
+                src={trLogo}
+                alt="Tech Reformers logo"
+                style={{ height: 60, width: 'auto', marginRight: '16px' }}
               />
               <img
                 src={awsLogo}
@@ -253,7 +252,7 @@ const LandingPage = () => {
               component="h2"
               sx={{
                 mb: 4,
-                color: '#FFC627',
+                color: '#6bad24',
                 textAlign: 'center',
                 fontWeight: 'bold',
               }}
@@ -274,7 +273,7 @@ const LandingPage = () => {
                 />
               }
               sx={{
-                backgroundColor: '#FFC627',
+                backgroundColor: '#6bad24',
                 color: '#000',
                 fontWeight: 'bold',
                 fontSize: '1.2rem',
@@ -292,7 +291,7 @@ const LandingPage = () => {
                   transform: 'scale(1.05)',
                 },
                 '&.MuiLoadingButton-loading': {
-                  backgroundColor: '#FFC627',
+                  backgroundColor: '#6bad24',
                 },
               }}
             >
@@ -308,7 +307,7 @@ const LandingPage = () => {
                 e.preventDefault();
                 handleOpenDialog();
               }}
-              sx={{ fontSize: '0.9rem', color: '#FFC627' }}
+              sx={{ fontSize: '0.9rem', color: '#6bad24' }}
             >
               Learn more about the remediation process
             </StyledLink>
@@ -320,7 +319,7 @@ const LandingPage = () => {
       <Box
         sx={{
           height: '5px',
-          backgroundColor: '#FFC627',
+          backgroundColor: '#6bad24',
         }}
       />
 
@@ -376,7 +375,7 @@ const LandingPage = () => {
               This solution is available open source and can be added to your
               AWS account for usage and testing.
               <StyledLink
-                href="https://github.com/ASUCICREPO/PDF_Accessibility"
+                href="https://github.com/Tech-Reformers/PDF_Accessibility_v2"
                 target="_blank"
                 rel="noopener"
                 sx={{ ml: 0.5 }}
@@ -391,8 +390,8 @@ const LandingPage = () => {
             </ListItemIcon>
             <Typography variant="body1" component="h3">
               Have questions about the AI CIC or need support? Email us:{' '}
-              <StyledEmailLink href="mailto:ai-cic@amazon.com">
-                ai-cic@amazon.com
+              <StyledEmailLink href="mailto:support@techreformers.com">
+                support@techreformers.com
               </StyledEmailLink>
             </Typography>
           </ListItem>
@@ -424,35 +423,32 @@ const LandingPage = () => {
           }}
         />
         <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
-          About the AI CIC:
+          About Tech Reformers:
         </Typography>
         <Typography variant="body1" component="h3" paragraph>
-          The ASU Artificial Intelligence Cloud Innovation Center (AI CIC),
-          powered by AWS, is a no‐cost design thinking and rapid prototyping
-          shop dedicated to bridging the digital divide and driving innovation
-          in the nonprofit, healthcare, education, and government sectors.
+          Tech Reformers is an AWS Partner specializing in cloud migration,
+          AI solutions, and digital accessibility for nonprofits, education,
+          and government organizations. We help organizations modernize their
+          technology infrastructure and deliver better outcomes for the
+          communities they serve.
         </Typography>
         <Typography variant="body1" component="h3" paragraph>
-          Our expert team harnesses Amazon’s pioneering approach to dive deep
-          into high-priority pain points, meticulously define challenges, and
-          craft strategic solutions. We collaborate with AWS solutions
-          architects and talented student workers to develop tailored
-          prototypes showcasing how advanced technology can tackle a wide
-          range of operational and mission-related challenges.
+          This PDF Accessibility Tool is built on AWS and uses generative AI
+          to help organizations meet WCAG 2.1 Level AA compliance requirements
+          at scale — without manual remediation effort.
         </Typography>
         <Typography variant="body1" component="h3" paragraph>
-          Discover how we use technology to drive innovation. Visit our
-          website at{' '}
+          Learn more at{' '}
           <StyledLink
-            href="https://smartchallenges.asu.edu/challenges/pdf-accessibility-ohio-state-university"
+            href="https://www.techreformers.com"
             target="_blank"
             rel="noopener"
           >
-            AI CIC
+            techreformers.com
           </StyledLink>{' '}
-          or contact us directly at{' '}
-          <StyledEmailLink href="mailto:ai-cic@amazon.com">
-            ai-cic@amazon.com
+          or contact us at{' '}
+          <StyledEmailLink href="mailto:support@techreformers.com">
+            support@techreformers.com
           </StyledEmailLink>
           .
         </Typography>
@@ -531,7 +527,7 @@ const LandingPage = () => {
       This solution is <em>open source</em> and can be deployed in your
       own AWS environment. Check out{' '}
       <StyledLink
-                href="https://github.com/ASUCICREPO/PDF_Accessibility"
+                href="https://github.com/Tech-Reformers/PDF_Accessibility_v2"
                 target="_blank"
                 rel="noopener"
                 sx={{ ml: 0.5 }}

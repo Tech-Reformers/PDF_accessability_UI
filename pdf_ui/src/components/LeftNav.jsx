@@ -139,12 +139,12 @@ const LeftNav = ({ isCollapsed, setIsCollapsed, mobileOpen, setMobileOpen }) => 
               Review documentation and access the GitHub repo at:
             </Typography>
             <Typography variant="body2" gutterBottom>
-              <Link href="https://github.com/ASUCICREPO/PDF_Accessibility" target="_blank" rel="noopener noreferrer">
+              <Link href="https://github.com/Tech-Reformers/PDF_Accessibility_v2" target="_blank" rel="noopener noreferrer">
                 GitHub Repo
               </Link>
             </Typography>
             <Typography variant="body2" gutterBottom>
-              Have questions or need support? Email us: <strong>ai-cic@amazon.com</strong>
+              Have questions or need support? Email us: <strong>support@techreformers.com</strong>
             </Typography>
           </CardContent>
         </Card>

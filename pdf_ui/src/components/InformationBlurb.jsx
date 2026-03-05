@@ -47,7 +47,7 @@ const InformationBlurb = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            borderTop: '2px solid #8c1d40',
+            borderTop: '2px solid #2c550b',
             position: 'relative',
             minHeight: { xs: '100px', sm: '140px' },
             margin: { xs: '0 auto', sm: '0' }
@@ -55,7 +55,7 @@ const InformationBlurb = () => {
         >
           <Box
             sx={{
-              backgroundColor: '#ffc627',
+              backgroundColor: '#6bad24',
               padding: { xs: 0.75, sm: 1 },
               borderRadius: 1,
               marginBottom: { xs: 1.5, sm: 2 },

@@ -36,7 +36,7 @@ export const validateBucketConfiguration = () => {
     missingBuckets,
     pdfBucketConfigured,
     htmlBucketConfigured,
-    deploymentUrl: 'https://github.com/ASUCICREPO/PDF_Accessibility'
+    deploymentUrl: 'https://github.com/Tech-Reformers/PDF_Accessibility_v2'
   };
 };
 
@@ -56,7 +56,7 @@ export const validateFormatBucket = (format) => {
     needsDeployment: !bucketConfigured,
     format: format,
     bucketType: isPdfFormat ? 'PDF Bucket' : 'HTML Bucket',
-    deploymentUrl: 'https://github.com/ASUCICREPO/PDF_Accessibility'
+    deploymentUrl: 'https://github.com/Tech-Reformers/PDF_Accessibility_v2'
   };
 };
 
