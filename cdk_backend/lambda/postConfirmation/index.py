@@ -3,7 +3,7 @@ import os
 import boto3
 
 def handler(event, context):
-    print('Post Confirmation Trigger Event:', json.dumps(event, indent=2))
+    print('Post Confirmation Trigger: new user sign-up')
     if event['triggerSource'] != 'PostConfirmation_ConfirmSignUp':
         print(f"Skipping initialization - trigger source is {event['triggerSource']}")
         return event
@@ -43,18 +43,10 @@ def handler(event, context):
         user_pool_id = event['userPoolId']
         username = event['userName']
 
-        # Determine the group to assign the user to
-        # For demonstration, we'll assign all users to the Default group
-        # You can implement your own logic here to assign to Amazon or Admin groups
+        # All new users are assigned to the default group.
+        # Admins can promote users to higher groups via the Cognito console,
+        # which triggers UpdateAttributesGroups to apply the new group's limits.
         assigned_group = DEFAULT_GROUP
-
-        # Example logic to assign to AmazonUsers based on email domain
-        user_email = event['request']['userAttributes'].get('email', '')
-        if user_email.endswith('@amazon.com'):
-            assigned_group = AMAZON_GROUP
-        # Example logic to assign to AdminUsers based on a specific condition
-        # elif user_email.endswith('@admin.com'):
-        #     assigned_group = ADMIN_GROUP
 
         # Add user to the assigned group
         cognito_idp.admin_add_user_to_group(
