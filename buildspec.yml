@@ -16,11 +16,17 @@ phases:
     commands:
       - echo "Building TypeScript sources"
       - npm run build
+      - echo "Resolving stable Cognito domain prefix..."
+      - ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+      - EXISTING_DOMAIN=$(aws cloudformation describe-stacks --stack-name CdkBackendStack --query 'Stacks[0].Outputs[?OutputKey==`UserPoolDomain`].OutputValue' --output text 2>/dev/null || echo "")
+      - if [ -n "$EXISTING_DOMAIN" ] && [ "$EXISTING_DOMAIN" != "None" ] && [ "$EXISTING_DOMAIN" != "null" ]; then DOMAIN_PREFIX=$EXISTING_DOMAIN; else DOMAIN_PREFIX="pdf-ui-auth-$(echo $ACCOUNT_ID | rev | cut -c1-8 | rev)"; fi
+      - echo "Using domain prefix $DOMAIN_PREFIX"
       - echo "Bootstrapping CDK (no approval)..."
       - >-
         cdk bootstrap --require-approval never \
           -c PDF_TO_PDF_BUCKET=$PDF_TO_PDF_BUCKET \
-          -c PDF_TO_HTML_BUCKET=$PDF_TO_HTML_BUCKET
+          -c PDF_TO_HTML_BUCKET=$PDF_TO_HTML_BUCKET \
+          -c DOMAIN_PREFIX=$DOMAIN_PREFIX
 
   build:
     commands:
@@ -28,7 +34,8 @@ phases:
       - >-
         cdk deploy --all --require-approval never \
           -c PDF_TO_PDF_BUCKET=$PDF_TO_PDF_BUCKET \
-          -c PDF_TO_HTML_BUCKET=$PDF_TO_HTML_BUCKET
+          -c PDF_TO_HTML_BUCKET=$PDF_TO_HTML_BUCKET \
+          -c DOMAIN_PREFIX=$DOMAIN_PREFIX
 
   post_build:
     commands:

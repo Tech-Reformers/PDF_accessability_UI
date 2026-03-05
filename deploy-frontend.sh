@@ -170,20 +170,24 @@ FRONTEND_SOURCE='{
 ARTIFACTS='{"type":"NO_ARTIFACTS"}'
 SOURCE_VERSION="main"
 
-echo "Creating Frontend CodeBuild project '$FRONTEND_PROJECT_NAME'..."
-aws codebuild create-project \
-  --name "$FRONTEND_PROJECT_NAME" \
-  --source "$FRONTEND_SOURCE" \
-  --source-version "$SOURCE_VERSION" \
-  --artifacts "$ARTIFACTS" \
-  --environment "$FRONTEND_ENVIRONMENT" \
-  --service-role "$ROLE_ARN" \
-  --output json \
-  --no-cli-pager
+if aws codebuild batch-get-projects --names "$FRONTEND_PROJECT_NAME" --query 'projects[0].name' --output text 2>/dev/null | grep -q "^${FRONTEND_PROJECT_NAME}$"; then
+  echo "✓ Frontend CodeBuild project '$FRONTEND_PROJECT_NAME' already exists, reusing"
+else
+  echo "Creating Frontend CodeBuild project '$FRONTEND_PROJECT_NAME'..."
+  aws codebuild create-project \
+    --name "$FRONTEND_PROJECT_NAME" \
+    --source "$FRONTEND_SOURCE" \
+    --source-version "$SOURCE_VERSION" \
+    --artifacts "$ARTIFACTS" \
+    --environment "$FRONTEND_ENVIRONMENT" \
+    --service-role "$ROLE_ARN" \
+    --output json \
+    --no-cli-pager
 
-if [ $? -ne 0 ]; then
-  echo "✗ Failed to create frontend CodeBuild project"
-  exit 1
+  if [ $? -ne 0 ]; then
+    echo "✗ Failed to create frontend CodeBuild project"
+    exit 1
+  fi
 fi
 
 # --------------------------------------------------

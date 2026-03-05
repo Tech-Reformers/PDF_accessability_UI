@@ -5,9 +5,8 @@ set -euo pipefail
 # 1. Configure S3 buckets for PDF processing
 # --------------------------------------------------
 
-TIMESTAMP=$(date +%Y%m%d%H%M%S)
-PROJECT_NAME="pdf-ui-${TIMESTAMP}"
-echo "Auto-generated project name: $PROJECT_NAME"
+PROJECT_NAME="pdf-ui"
+echo "Project name: $PROJECT_NAME"
 
 # Configure S3 buckets (at least one required)
 echo ""
@@ -439,20 +438,24 @@ BACKEND_SOURCE='{
 ARTIFACTS='{"type":"NO_ARTIFACTS"}'
 SOURCE_VERSION="main"
 
-echo "Creating Backend CodeBuild project '$BACKEND_PROJECT_NAME'..."
-aws codebuild create-project \
-  --name "$BACKEND_PROJECT_NAME" \
-  --source "$BACKEND_SOURCE" \
-  --source-version "$SOURCE_VERSION" \
-  --artifacts "$ARTIFACTS" \
-  --environment "$BACKEND_ENVIRONMENT" \
-  --service-role "$ROLE_ARN" \
-  --output json \
-  --no-cli-pager
+if aws codebuild batch-get-projects --names "$BACKEND_PROJECT_NAME" --query 'projects[0].name' --output text 2>/dev/null | grep -q "^${BACKEND_PROJECT_NAME}$"; then
+  echo "✓ Backend CodeBuild project '$BACKEND_PROJECT_NAME' already exists, reusing"
+else
+  echo "Creating Backend CodeBuild project '$BACKEND_PROJECT_NAME'..."
+  aws codebuild create-project \
+    --name "$BACKEND_PROJECT_NAME" \
+    --source "$BACKEND_SOURCE" \
+    --source-version "$SOURCE_VERSION" \
+    --artifacts "$ARTIFACTS" \
+    --environment "$BACKEND_ENVIRONMENT" \
+    --service-role "$ROLE_ARN" \
+    --output json \
+    --no-cli-pager
 
-if [ $? -ne 0 ]; then
-  echo "✗ Failed to create backend CodeBuild project"
-  exit 1
+  if [ $? -ne 0 ]; then
+    echo "✗ Failed to create backend CodeBuild project"
+    exit 1
+  fi
 fi
 
 # --------------------------------------------------
