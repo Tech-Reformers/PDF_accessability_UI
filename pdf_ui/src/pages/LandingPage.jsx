@@ -515,16 +515,15 @@ const LandingPage = () => {
       6. This solution does not remediate fillable forms or handle color selection/contrast.
     </Typography>
     <Typography variant="body1" component="p" paragraph>
-      This solution is <em>open source</em> and can be deployed in your
-      own AWS environment. Check out{' '}
+      Reach out to{' '}
       <StyledLink
-                href="https://github.com/Tech-Reformers/PDF_Accessibility_v2"
-                target="_blank"
-                rel="noopener"
-                sx={{ ml: 0.5 }}
-              >
-                Github
+        href="https://techreformers.com/pdf-accessibility-solution/"
+        target="_blank"
+        rel="noopener"
+      >
+        Tech Reformers
       </StyledLink>
+      {' '}for more information.
     </Typography>
   </DialogContent>
 </Dialog>
