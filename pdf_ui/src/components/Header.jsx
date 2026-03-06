@@ -231,9 +231,9 @@ function Header({ handleSignOut, usageCount, maxFilesAllowed, refreshUsage, usag
               },
               transition: 'all 0.3s ease-in-out',
             }}
-            aria-label="Home Button"
+            aria-label="Sign Out Button"
           >
-            {isMobile ? 'Home' : 'Home'}
+            Sign Out
           </Button>
         </Box>
       </Toolbar>

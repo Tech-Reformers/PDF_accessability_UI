@@ -232,7 +232,7 @@ function MainApp({ isLoggingOut, setIsLoggingOut }) {
           minHeight: '100vh'
         }}>
           <Header
-            handleSignOut={() => auth.removeUser()}
+            handleSignOut={() => auth.signoutRedirect()}
             usageCount={usageCount}
             refreshUsage={refreshUsage}
             usageError={usageError}

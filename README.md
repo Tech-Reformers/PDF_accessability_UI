@@ -397,9 +397,27 @@ This will show every file and line where the name appears. Update each one.
 | `pdf_ui/src/pages/UploadPage.jsx` | Upload interface |
 | `pdf_ui/src/pages/HistoryPage.jsx` | Job history view |
 | `pdf_ui/src/App.jsx` | Global theme, routing, color palette |
-| `pdf_ui/src/components/Header.jsx` | Top navigation bar |
+| `pdf_ui/src/App.js` | OIDC auth config (Cognito endpoints, redirect URIs) |
+| `pdf_ui/src/MainApp.js` | App shell, auth wiring, sign-out handler |
+| `pdf_ui/src/components/Header.jsx` | Top navigation bar, Sign Out button |
 | `pdf_ui/src/components/Footer.jsx` | Footer content |
 | `buildspec-frontend.yml` | Build commands run by CodeBuild |
+
+---
+
+### Sign Out
+
+The Sign Out button in the header calls `auth.signoutRedirect()` from `react-oidc-context`. This redirects the browser to Cognito's logout endpoint, ends the session server-side, then redirects back to the app home page.
+
+**Do not use `auth.removeUser()`** — that only clears local browser state. Cognito retains the session and the app silently re-authenticates the user on the next page load.
+
+The post-logout redirect URL is configured in `pdf_ui/src/App.js`:
+
+```javascript
+post_logout_redirect_uri: `${HostedUIUrl}/home`,
+```
+
+This URL must also be registered in the Cognito User Pool client's **Allowed sign-out URLs** in the AWS Console. If sign-out redirects to a blank page or errors, check that setting first.
 
 ---
 
