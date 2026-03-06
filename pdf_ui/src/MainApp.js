@@ -232,7 +232,8 @@ function MainApp({ isLoggingOut, setIsLoggingOut }) {
           minHeight: '100vh'
         }}>
           <Header
-            handleSignOut={() => {
+            handleSignOut={async () => {
+              await auth.removeUser();
               const logoutUri = encodeURIComponent(`${HostedUIUrl}/home`);
               window.location.href = `https://${DomainPrefix}.auth.${region}.amazoncognito.com/logout?client_id=${UserPoolClientId}&logout_uri=${logoutUri}`;
             }}
