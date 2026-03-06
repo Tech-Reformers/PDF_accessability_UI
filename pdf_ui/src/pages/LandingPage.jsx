@@ -343,29 +343,28 @@ const LandingPage = () => {
           About Tech Reformers:
         </Typography>
         <Typography variant="body1" component="h3" paragraph>
-          Tech Reformers is an AWS Partner specializing in cloud migration,
-          AI solutions, and digital accessibility for nonprofits, education,
-          and government organizations. We help organizations modernize their
-          technology infrastructure and deliver better outcomes for the
-          communities they serve.
+          Tech Reformers is an AWS Advanced Services Partner specializing in
+          cloud migration and AI solutions for business, education, and government
+          organizations. We help organizations modernize their technology
+          infrastructure and deliver better outcomes with AI.
         </Typography>
         <Typography variant="body1" component="h3" paragraph>
-          This PDF Accessibility Tool is built on AWS and uses generative AI
-          to help organizations meet WCAG 2.1 Level AA compliance requirements
-          at scale — without manual remediation effort.
+          This PDF Accessibility Tool is built on AWS and uses generative AI and
+          the Adobe API to reach WCAG 2.1 Level AA compliance requirements at
+          scale — without manual remediation effort.
         </Typography>
         <Typography variant="body1" component="h3" paragraph>
           Learn more at{' '}
           <StyledLink
-            href="https://www.techreformers.com"
+            href="https://techreformers.com"
             target="_blank"
             rel="noopener"
           >
             techreformers.com
           </StyledLink>{' '}
           or contact us at{' '}
-          <StyledEmailLink href="mailto:support@techreformers.com">
-            support@techreformers.com
+          <StyledEmailLink href="mailto:info@techreformers.com">
+            info@techreformers.com
           </StyledEmailLink>
           .
         </Typography>
