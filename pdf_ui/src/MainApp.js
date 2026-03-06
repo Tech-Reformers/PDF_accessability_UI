@@ -14,7 +14,7 @@ import FirstSignInDialog from './components/FirstSignInDialog';
 import HeroSection from './components/HeroSection';
 import InformationBlurb from './components/InformationBlurb';
 
-import { Authority, CheckAndIncrementQuota } from './utilities/constants';
+import { Authority, CheckAndIncrementQuota, DomainPrefix, region, UserPoolClientId, HostedUIUrl } from './utilities/constants';
 import CustomCredentialsProvider from './utilities/CustomCredentialsProvider';
 import DeploymentPopup from './components/DeploymentPopup';
 
@@ -232,7 +232,10 @@ function MainApp({ isLoggingOut, setIsLoggingOut }) {
           minHeight: '100vh'
         }}>
           <Header
-            handleSignOut={() => auth.signoutRedirect()}
+            handleSignOut={() => {
+              const logoutUri = encodeURIComponent(`${HostedUIUrl}/home`);
+              window.location.href = `https://${DomainPrefix}.auth.${region}.amazoncognito.com/logout?client_id=${UserPoolClientId}&logout_uri=${logoutUri}`;
+            }}
             usageCount={usageCount}
             refreshUsage={refreshUsage}
             usageError={usageError}
