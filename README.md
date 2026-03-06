@@ -407,17 +407,23 @@ This will show every file and line where the name appears. Update each one.
 
 ### Sign Out
 
-The Sign Out button in the header calls `auth.signoutRedirect()` from `react-oidc-context`. This redirects the browser to Cognito's logout endpoint, ends the session server-side, then redirects back to the app home page.
+The Sign Out button (`pdf_ui/src/components/Header.jsx`) calls a handler in `pdf_ui/src/MainApp.js` that:
 
-**Do not use `auth.removeUser()`** — that only clears local browser state. Cognito retains the session and the app silently re-authenticates the user on the next page load.
-
-The post-logout redirect URL is configured in `pdf_ui/src/App.js`:
+1. Calls `auth.removeUser()` to clear stored OIDC tokens from browser storage
+2. Redirects to the Cognito logout endpoint directly with the `logout_uri` parameter
 
 ```javascript
-post_logout_redirect_uri: `${HostedUIUrl}/home`,
+await auth.removeUser();
+window.location.href = `https://${DomainPrefix}.auth.${region}.amazoncognito.com/logout?client_id=${UserPoolClientId}&logout_uri=${logoutUri}`;
 ```
 
-This URL must also be registered in the Cognito User Pool client's **Allowed sign-out URLs** in the AWS Console. If sign-out redirects to a blank page or errors, check that setting first.
+**Why not `auth.signoutRedirect()`?** Cognito's logout endpoint uses a non-standard `logout_uri` parameter. `react-oidc-context` sends `post_logout_redirect_uri` (OIDC standard), which Cognito rejects with HTTP 400.
+
+**Why not just `auth.removeUser()`?** That only clears local browser state. Cognito retains the server-side session and the app silently re-authenticates the user on next load.
+
+The `logout_uri` value (`${HostedUIUrl}/home`) must be registered in the Cognito User Pool client's **Allowed sign-out URLs** in the AWS Console — it already is for this deployment.
+
+**Known issue:** Brief visual flash on sign-out. `auth.removeUser()` marks the user as unauthenticated immediately, causing a React re-render before the browser navigates to Cognito. Fix tracked in CLAUDE.md.
 
 ---
 
