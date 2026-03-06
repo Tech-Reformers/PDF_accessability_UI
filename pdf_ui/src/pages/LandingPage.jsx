@@ -179,32 +179,23 @@ const LandingPage = () => {
           }}
         >
           <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold', mb: 2 }}>
-            PDF Accessibility Remediation
+            PDF Accessibility Solution
           </Typography>
 
           <Typography variant="h5" component="h2" sx={{ fontWeight: 'medium', mb: 2 }}>
             About this solution:
           </Typography>
           <Typography variant="body1" component="h3" paragraph>
-            This solution was developed by Tech Reformers, powered by Amazon Web
-            Services (AWS), to tackle a significant challenge in the digital era:
-            improving the accessibility of digital document collections.
+            This solution is provided by Tech Reformers and powered by Amazon Web
+            Services (AWS) to improve the accessibility of Adobe PDF documents. It
+            is built upon the open source project from Arizona State University’s
+            AI Cloud Innovation Center (AI CIC).
           </Typography>
           <Typography variant="body1" component="h3" paragraph>
-            With the Department of Justice’s April 2024 updates to how the
-            Americans with Disabilities Act (ADA) will be regulated, the AI CIC
-            developed a scalable open‐source solution that quickly and
-            efficiently brings PDF documents into compliance with WCAG 2.1 Level
-            AA standards. For bulk processing, 10 pages would cost approximately
-            $0.013 for AWS service costs + Adobe API costs.
-          </Typography>
-          <Typography variant="body1" component="h3" paragraph>
-            To test out this open‐source solution,{' '}
-            <Box component="span" sx={{ color: '#6bad24', fontWeight: 'bold' }}>
-              click the button to the right
-            </Box>{' '}
-            to briefly create an account, upload your document, and receive your
-            remediated PDF in return.
+            Tech Reformers provides this demo for testing purposes. We build the
+            solution in an AWS account specifically for client use. We provide
+            training and support. We will provide custom pricing in an AWS
+            Marketplace Private Offer.
           </Typography>
 
           {/* Provided By Section */}

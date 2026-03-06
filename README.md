@@ -301,6 +301,108 @@ Monitor application activity through CloudWatch:
 - **Verify Backend Deployment**: Ensure backend is deployed and accessible
 - **Contact Support**: ai-cic@amazon.com
 
+## Customizing the UI
+
+This section covers how to make client-specific changes to the UI. All edits are made in the local repo, then committed, pushed, and redeployed via CodeBuild.
+
+### Workflow
+
+```bash
+# 1. Edit files in the local repo (see sections below for what to change)
+# 2. Commit and push
+git add -A && git commit -m "UI customization" && git push
+
+# 3. Redeploy the frontend (~5 minutes)
+export AWS_PROFILE=<your-profile>
+export AWS_DEFAULT_REGION=us-west-2
+cd /path/to/PDF_Accessibility_v2/PDF_Accessibility_v2
+./deploy-ui-only.sh
+```
+
+---
+
+### Landing Page Text
+
+**File:** `pdf_ui/src/pages/LandingPage.jsx`
+
+| What | Approximate line | Description |
+|---|---|---|
+| Main heading | ~182 | Large bold title at top of left panel |
+| "About this solution:" subheading | ~186 | Section label |
+| Paragraph 1 | ~188 | First body paragraph |
+| Paragraph 2 | ~193 | Second body paragraph |
+| Paragraph 3 | ~201 | Third body paragraph (call to action) |
+
+Each paragraph is a `<Typography>` block. Edit the text between the tags directly.
+
+---
+
+### Branding: Colors
+
+**File:** `pdf_ui/src/App.jsx` (or the MUI theme file if one exists)
+
+The primary and secondary brand colors are set in the MUI theme:
+
+```javascript
+primary: { main: '#6bad24' },   // Tech Reformers green
+secondary: { main: '#2c550b' }, // Dark green
+```
+
+Search for these hex values across the `pdf_ui/src/` directory to find all hardcoded color references:
+
+```bash
+grep -r "#6bad24" pdf_ui/src/
+grep -r "#2c550b" pdf_ui/src/
+```
+
+---
+
+### Branding: Logo
+
+**File:** `pdf_ui/src/assets/` (or `public/`)
+
+Replace the logo image file. If the filename changes, update the import reference in the component that renders it (search for the old filename).
+
+---
+
+### Support Contact Email
+
+Search for the support email across the source:
+
+```bash
+grep -r "support@" pdf_ui/src/
+```
+
+Update each occurrence to the client's support address.
+
+---
+
+### Company Name / App Name
+
+Search for the company name string:
+
+```bash
+grep -r "Tech Reformers" pdf_ui/src/
+```
+
+This will show every file and line where the name appears. Update each one.
+
+---
+
+### Key Files at a Glance
+
+| File | Controls |
+|---|---|
+| `pdf_ui/src/pages/LandingPage.jsx` | Home page content and layout |
+| `pdf_ui/src/pages/UploadPage.jsx` | Upload interface |
+| `pdf_ui/src/pages/HistoryPage.jsx` | Job history view |
+| `pdf_ui/src/App.jsx` | Global theme, routing, color palette |
+| `pdf_ui/src/components/Header.jsx` | Top navigation bar |
+| `pdf_ui/src/components/Footer.jsx` | Footer content |
+| `buildspec-frontend.yml` | Build commands run by CodeBuild |
+
+---
+
 ## Contributing
 
 Contributions to this project are welcome! Please:
