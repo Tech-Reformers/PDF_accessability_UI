@@ -29,6 +29,7 @@ import trLogo from '../assets/TechReformers100.png';
 import gradientImg from '../assets/Gradient.svg';
 import awsLogo from '../assets/POWERED_BY_AWS.png';
 import bottomGradient from '../assets/bottom_gradient.svg';
+import productLogo from '../assets/PDF-Accessibility-Solution-logo.png';
 
 // Styled Components
 import { styled } from '@mui/system';
@@ -178,13 +179,21 @@ const LandingPage = () => {
             minWidth: '300px',
           }}
         >
-          <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold', mb: 2 }}>
-            PDF Accessibility Solution
-          </Typography>
-
-          <Typography variant="h5" component="h2" sx={{ fontWeight: 'medium', mb: 2 }}>
-            About this solution:
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mb: 2 }}>
+            <img
+              src={productLogo}
+              alt="PDF Accessibility Solution logo"
+              style={{ height: 100, width: 'auto', flexShrink: 0 }}
+            />
+            <Box>
+              <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold', mb: 1 }}>
+                PDF Accessibility Solution
+              </Typography>
+              <Typography variant="h5" component="h2" sx={{ fontWeight: 'medium' }}>
+                About this solution:
+              </Typography>
+            </Box>
+          </Box>
           <Typography variant="body1" component="h3" paragraph>
             This solution is provided by Tech Reformers and powered by Amazon Web
             Services (AWS) to improve the accessibility of Adobe PDF documents. It
