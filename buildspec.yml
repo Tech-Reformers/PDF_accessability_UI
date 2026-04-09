@@ -23,13 +23,20 @@ phases:
       - echo "Using domain prefix $DOMAIN_PREFIX"
       - CUSTOM_DOMAIN_ARG=""
       - if [ -n "${CUSTOM_DOMAIN:-}" ]; then CUSTOM_DOMAIN_ARG="-c CUSTOM_DOMAIN=$CUSTOM_DOMAIN"; echo "Using custom domain $CUSTOM_DOMAIN"; fi
-      - echo "Bootstrapping CDK (no approval)..."
+      - echo "Checking CDK bootstrap status..."
+      - CDK_STACK_STATUS=$(aws cloudformation describe-stacks --stack-name CDKToolkit --query 'Stacks[0].StackStatus' --output text 2>/dev/null || echo "DOES_NOT_EXIST")
+      - echo "CDKToolkit status $CDK_STACK_STATUS"
       - >-
-        cdk bootstrap --require-approval never \
-          -c PDF_TO_PDF_BUCKET=$PDF_TO_PDF_BUCKET \
-          -c PDF_TO_HTML_BUCKET=$PDF_TO_HTML_BUCKET \
-          -c DOMAIN_PREFIX=$DOMAIN_PREFIX \
-          $CUSTOM_DOMAIN_ARG
+        if [ "$CDK_STACK_STATUS" = "CREATE_COMPLETE" ] || [ "$CDK_STACK_STATUS" = "UPDATE_COMPLETE" ] || [ "$CDK_STACK_STATUS" = "UPDATE_ROLLBACK_COMPLETE" ]; then
+          echo "CDK already bootstrapped, skipping.";
+        else
+          echo "Bootstrapping CDK (no approval)...";
+          cdk bootstrap --require-approval never
+            -c PDF_TO_PDF_BUCKET=$PDF_TO_PDF_BUCKET
+            -c PDF_TO_HTML_BUCKET=$PDF_TO_HTML_BUCKET
+            -c DOMAIN_PREFIX=$DOMAIN_PREFIX
+            $CUSTOM_DOMAIN_ARG;
+        fi
 
   build:
     commands:
