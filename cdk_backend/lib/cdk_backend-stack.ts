@@ -83,10 +83,16 @@ export class CdkBackendStack extends cdk.Stack {
     }));
 
     const domainPrefix = this.node.tryGetContext('DOMAIN_PREFIX') || 'pdf-ui-auth-default'; // passed from buildspec; stable across redeploys
+    // Optional custom domain (e.g. pdf.techreformers.com). When set, Cognito callbacks,
+    // CORS, and the Amplify HOSTED_UI_URL env var all point to it instead of the
+    // default amplifyapp.com URL. Leave unset for customers without a custom domain.
+    const CUSTOM_DOMAIN = this.node.tryGetContext('CUSTOM_DOMAIN') || '';
     const Default_Group = 'DefaultUsers';
     const Amazon_Group = 'AmazonUsers';
     const Admin_Group = 'AdminUsers';
     const appUrl = `https://main.${amplifyApp.appId}.amplifyapp.com`;
+    // primaryUrl is what users actually land on — custom domain takes precedence
+    const primaryUrl = CUSTOM_DOMAIN ? `https://${CUSTOM_DOMAIN}` : appUrl;
 
     // --------- Set CORS on imported S3 buckets via custom resource ----------
     const corsConfiguration = {
@@ -94,7 +100,7 @@ export class CdkBackendStack extends cdk.Stack {
         {
           AllowedHeaders: ['*'],
           AllowedMethods: ['GET', 'PUT', 'POST', 'HEAD'],
-          AllowedOrigins: [appUrl, 'http://localhost:3000'],
+          AllowedOrigins: [appUrl, primaryUrl, 'http://localhost:3000'].filter((v, i, a) => a.indexOf(v) === i),
           ExposeHeaders: ['ETag'],
           MaxAgeSeconds: 3600,
         },
@@ -294,8 +300,8 @@ export class CdkBackendStack extends cdk.Stack {
           cognito.OAuthScope.PHONE,
           cognito.OAuthScope.PROFILE
         ],
-        callbackUrls: [`${appUrl}/callback`,"http://localhost:3000/callback"],
-        logoutUrls: [`${appUrl}/home`, "http://localhost:3000/home"],
+        callbackUrls: [...new Set([`${appUrl}/callback`, `${primaryUrl}/callback`, 'http://localhost:3000/callback'])],
+        logoutUrls: [...new Set([`${appUrl}/home`, `${primaryUrl}/home`, 'http://localhost:3000/home'])],
       },
       generateSecret: false,
       preventUserExistenceErrors: true,
@@ -470,7 +476,7 @@ export class CdkBackendStack extends cdk.Stack {
 
     mainBranch.addEnvironment('REACT_APP_USER_POOL_CLIENT_ID', userPoolClient.userPoolClientId);
     mainBranch.addEnvironment('REACT_APP_IDENTITY_POOL_ID', identityPool.ref);
-    mainBranch.addEnvironment('REACT_APP_HOSTED_UI_URL', appUrl);
+    mainBranch.addEnvironment('REACT_APP_HOSTED_UI_URL', primaryUrl);
     mainBranch.addEnvironment('REACT_APP_DOMAIN_PREFIX', domainPrefix);
 
     mainBranch.addEnvironment('REACT_APP_UPDATE_FIRST_SIGN_IN', updateAttributesApi.urlForPath('/update-first-sign-in'));
