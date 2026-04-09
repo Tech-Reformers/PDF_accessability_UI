@@ -19,6 +19,12 @@ phases:
       - |
         # Extract AWS region from User Pool ID (format: region_poolId)
         AWS_REGION=$(echo $REACT_APP_USER_POOL_ID | cut -d'_' -f1)
+        # Use custom domain if provided, otherwise fall back to Amplify default URL
+        if [ -n "${CUSTOM_DOMAIN:-}" ]; then
+          HOSTED_UI_URL="https://$CUSTOM_DOMAIN"
+        else
+          HOSTED_UI_URL="$REACT_APP_AMPLIFY_APP_URL"
+        fi
         cat > .env << EOF
         # Environment variables for PDF Accessibility UI
         REACT_APP_MAINTENANCE_MODE=false
@@ -33,7 +39,7 @@ phases:
         REACT_APP_UPLOAD_QUOTA_API=$REACT_APP_CHECK_UPLOAD_QUOTA_ENDPOINT
         REACT_APP_USER_POOL_CLIENT_ID=$REACT_APP_USER_POOL_CLIENT_ID
         REACT_APP_USER_POOL_ID=$REACT_APP_USER_POOL_ID
-        REACT_APP_HOSTED_UI_URL=${CUSTOM_DOMAIN:+https://$CUSTOM_DOMAIN}${CUSTOM_DOMAIN:-$REACT_APP_AMPLIFY_APP_URL}
+        REACT_APP_HOSTED_UI_URL=$HOSTED_UI_URL
         EOF
       - echo "Contents of .env file:"
       - cat .env
