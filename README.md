@@ -389,6 +389,36 @@ This will show every file and line where the name appears. Update each one.
 
 ---
 
+### Custom Domain
+
+If the app is served from a custom domain (e.g. `pdf.example.com`) instead of the default `amplifyapp.com` URL, you must configure it in two places so that Cognito's OAuth redirect and CORS work correctly.
+
+**Step 1 — Set up the custom domain in Amplify**
+
+In the AWS Console → Amplify → your app → Domain management, add and verify your custom domain. This is a one-time manual step.
+
+**Step 2 — Add `CUSTOM_DOMAIN` to both CodeBuild projects**
+
+```bash
+# Backend project (runs CDK — updates Cognito callback URLs, CORS, Amplify env vars)
+aws codebuild update-project --name <backend-project-name> \
+  --environment '... existing env ..., {"name":"CUSTOM_DOMAIN","value":"pdf.example.com","type":"PLAINTEXT"}'
+
+# Frontend project (runs React build — sets REACT_APP_HOSTED_UI_URL)
+aws codebuild update-project --name <frontend-project-name> \
+  --environment '... existing env ..., {"name":"CUSTOM_DOMAIN","value":"pdf.example.com","type":"PLAINTEXT"}'
+```
+
+Or add it via the AWS Console → CodeBuild → project → Edit environment → Environment variables.
+
+**Step 3 — Run both builds**
+
+Run the backend build first (updates Cognito + Amplify env vars), then the frontend build (rebuilds React with the correct redirect URI).
+
+If `CUSTOM_DOMAIN` is not set, everything falls back to the default `amplifyapp.com` URL — no impact on deployments without a custom domain.
+
+---
+
 ### Key Files at a Glance
 
 | File | Controls |
